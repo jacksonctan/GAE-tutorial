@@ -7,9 +7,12 @@ threadsafe: true
 handlers:
 - url: /img
   static_dir: img
-  
-- url: /stylesheets
-  static_dir: stylesheets
+
+- url: /css
+  static_dir: css
+
+- url: /js
+  static_dir: js
 
 - url: /.*
   script: guestbook.application

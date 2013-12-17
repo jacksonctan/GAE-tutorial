@@ -2,9 +2,28 @@
 {% autoescape true %}
 <html>
   <head>
-    <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+    <title> CoinCast: Local Bitcoin classifieds for jobs, apartments, personals, for sale, services, community, and events</title>
+    <link type="text/css" rel="stylesheet" media="all" href="/css/main.css" />
+    <script type="text/javascript">
+    window.onload = function(){
+      var submitbutton = document.getElementById("query");
+      if(submitbutton.addEventListener){
+        submitbutton.addEventListener("click", function() {
+          if (submitbutton.value == 'Search listings'){
+            submitbutton.value = '';
+          }
+        });
+      }
+    }
+    </script>
   </head>
-  <body>
+  <body class="homepage">
+    <div id="header">
+      <form id="search" method="get" action="http://www.google.com">
+        <input type="text" id="query" class="textinput" name="query" size="21" maxlength="120" value="Search listings"><input type="submit" value=" " class="button"> 
+      </form>
+      <div class = "clear"></div>
+    </div>
     {% for greeting in greetings %}
       {% if greeting.author %}
         <b>{{ greeting.author.nickname() }}</b> wrote:
@@ -35,35 +54,7 @@
 
     <input id="num" type="text">
 
-    <script>
-    function myFunction()
-    {
-      x=document.getElementById("demo"); //Find the element
-      x.innerHTML="Hello JavaScript!"; //Change the content
-    }
-
-    function scrubInput()
-    {
-      var x=document.getElementById("num").value;
-      if (x=="" || isNaN(x))
-      {
-        alert("Not Numeric");
-      }
-    }
-
-    function changeImage()
-    {
-      element=document.getElementById('myimage')
-      if (element.src.match("bulbon"))
-      {
-        element.src="/img/pic_bulboff.gif"
-      }
-      else
-      {
-        element.src="/img/pic_bulbon.gif"
-      }
-    }
-    </script>
+    <script src="/js/myScript.js"></script>
 
     <button type="button" onclick="myFunction()">Click Me!</button>
     <button type="button" onclick="scrubInput()">Validate number</button>
