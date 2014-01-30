@@ -25,4 +25,3 @@ function changeImage()
     element.src="/img/pic_bulbon.gif"
   }
 }
-

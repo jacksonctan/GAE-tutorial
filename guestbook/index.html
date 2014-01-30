@@ -1,360 +1,52 @@
+<!DOCTYPE html>
+{% autoescape true %}
+<html>
+  <head>
+    <link type="text/css" rel="stylesheet" href="/css/main.css" />
+  </head>
+  <body>
+    {% for greeting in greetings %}
+      {% if greeting.author %}
+        <b>{{ greeting.author.nickname() }}</b> wrote:
+      {% else %}
+       An anonymous person wrote:
+      {% endif %}
+      <blockquote>{{ greeting.content }}</blockquote>
+    {% endfor %}
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
-    <head>
-        <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <form action="/sign?guestbook_name={{ guestbook_name }}" method="post">
+      <div><textarea name="content" rows="3" cols="60"></textarea></div>
+      <div><input type="submit" value="Sign Guestbook"></div>
+    </form>
 
-<title>NoLogo Inc.</title>
-<meta name="title" content="NoLogo Inc." />
-<meta http-equiv="Cache-Control" content="no-cache" />
-<meta http-equiv="Expires" content="Fri, Jan 01 1970 00:00:00 GMT" />
+    <hr>
 
-<script type="text/javascript">
-    var fileDefaultText = 'No file selected';
-    var fileBtnText     = 'Choose File';
-</script>
+    <form>Guestbook name:
+      <input value="{{ guestbook_name }}" name="guestbook_name">
+      <input type="submit" value="switch">
+    </form>
 
-<meta name="generator" content="Osclass 3.2.2" /><link href="http://demo.osclass.org/general/oc-content/plugins/demo_theme/custom.css" media="screen" rel="stylesheet" type="text/css" /><script type="text/javascript" src="http://demo.osclass.org/general/oc-includes/osclass/assets/js/date.js"></script>
-<script type="text/javascript" src="http://demo.osclass.org/general/oc-includes/osclass/assets/js/jquery.min.js"></script>
-<script type="text/javascript" src="http://demo.osclass.org/general/oc-includes/osclass/assets/js/jquery-ui.min.js"></script>
-<script type="text/javascript" src="http://demo.osclass.org/general/oc-content/themes/modern/js/jquery.uniform.js"></script>
-<script type="text/javascript" src="http://demo.osclass.org/general/oc-includes/osclass/assets/js/tabber-minimized.js"></script>
-<script type="text/javascript" src="http://demo.osclass.org/general/oc-content/themes/modern/js/global.js"></script>
-<link href="http://demo.osclass.org/general/oc-content/themes/modern/style.css" rel="stylesheet" type="text/css" />
-<link href="http://demo.osclass.org/general/oc-content/themes/modern/tabs.css" rel="stylesheet" type="text/css" />
-<link href="http://demo.osclass.org/general/oc-includes/osclass/assets/css/jquery-ui/jquery-ui.css" rel="stylesheet" type="text/css" />
-        <script text="text/javascript">
+    <a href="{{ url|safe }}">{{ url_linktext }}</a>
 
-            $.datepicker.regional['custom'] = { // Default regional settings
-    closeText: 'Done', // Display text for close link
-    prevText: 'Prev', // Display text for previous month link
-    nextText: 'Next', // Display text for next month link
-    currentText: 'Today', // Display text for current month link
-    monthNames: ['January','February','March','April','May','June',
-      'July','August','September','October','November','December'], // Names of months for drop-down and formatting
-    monthNamesShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], // For formatting
-    dayNames: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], // For formatting
-    dayNamesShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], // For formatting
-    dayNamesMin: ['Su','Mo','Tu','We','Th','Fr','Sa'], // Column headings for days starting at Sunday
-    weekHeader: 'Wk', // Column header for week of the year
-    dateFormat: 'dd/mm/yy', // See format options on parseDate
-    firstDay: 0, // The first day of the week, Sun = 0, Mon = 1, ...
-    isRTL: false, // True if right-to-left language, false if left-to-right
-    showMonthAfterYear: false, // True if the year select precedes month, false for month then year
-    yearSuffix: '' // Additional text to append to the year in the month headers
-            };
-        </script>
-                    <meta name="robots" content="index, follow" />
-        <meta name="googlebot" content="index, follow" />
-    </head>
-    <body>
-        <!-- container -->
-<div class="container">
-<!-- header -->
-<div id="header">
-    <a id="logo" href="http://demo.osclass.org/general/">
-    <img border="0" alt="NoLogo Inc." src="http://demo.osclass.org/general/oc-content/themes/modern/images/default-logo.jpg" />    </a>
-    <div id="user_menu">
-        <ul>
-                                                <li class="first">
-                        <a id="login_open" href="http://demo.osclass.org/general/index.php?page=login">Login</a>
-                                                    &middot;
-                            <a href="http://demo.osclass.org/general/index.php?page=register&action=register">Register for a free account</a>
-                                                <form id="login" action="http://demo.osclass.org/general/index.php" method="post"><input type='hidden' name='CSRFName' value='CSRF83497906_210680074' />
-        <input type='hidden' name='CSRFToken' value='f8f602aa5ba9d4989abfb1550d70a8d2870bd412fa34c25875d4fbacde725763e85adbdf10599a3038c5099d8a5b923820042acbfdd569148499a7eca6944f66' />
-                            <fieldset>
-                                <input type="hidden" name="page" value="login" />
-                                <input type="hidden" name="action" value="login_post" />
-                                <label for="email">E-mail</label><br/>
-                                <input id="email" type="text" name="email" value="" /><br/>
-                                <label for="password">Password</label><br/>
-                                <input id="password" type="password" name="password" value="" />                                <p class="checkbox"><input id="remember" type="checkbox" name="remember" value="1" /> <label for="remember">Remember me</label></p>
-                                <button type="submit">Log in</button>
-                                <div class="forgot">
-                                    <a href="http://demo.osclass.org/general/index.php?page=login&action=recover">Forgot password?</a>
-                                </div>
-                            </fieldset>
-                        </form>
-                    </li>
-                                                </ul>
-                    <div class="form_publish">
-                <strong class="publish_button"><a href="http://demo.osclass.org/general/index.php?page=item&action=item_add">Publish your ad for free</a></strong>
-            </div>
-                <div class="empty"></div>
-    </div>
-</div>
-<div class="clear"></div>
-<!-- /header -->
-<div class="forcemessages-inline">
-    <div id="flash_js"></div><div id="flashmessage" class="flashmessage" style="display:none;"></div></div>
-        <div class="form_publish">
-            <script type="text/javascript">
-    var sQuery = 'ie. PHP Programmer';
+    <!--Beginning of javascript experimentation-->
+    <p id="demo">
+    Javascript can change the content of an HTML element.
+    </p>
 
-    $(document).ready(function(){
-        if($('input[name=sPattern]').val() == sQuery) {
-            $('input[name=sPattern]').css('color', 'gray');
-        }
-        $('input[name=sPattern]').click(function(){
-            if($('input[name=sPattern]').val() == sQuery) {
-                $('input[name=sPattern]').val('');
-                $('input[name=sPattern]').css('color', '');
-            }
-        });
-        $('input[name=sPattern]').blur(function(){
-            if($('input[name=sPattern]').val() == '') {
-                $('input[name=sPattern]').val(sQuery);
-                $('input[name=sPattern]').css('color', 'gray');
-            }
-        });
-        $('input[name=sPattern]').keypress(function(){
-            $('input[name=sPattern]').css('background','');
-        })
-    });
-</script>
+    <input id="num" type="text">
 
-<form action="http://demo.osclass.org/general/index.php" method="get" class="search" onsubmit="javascript:return doSearch();"><input type='hidden' name='CSRFName' value='CSRF83497906_210680074' />
-        <input type='hidden' name='CSRFToken' value='f8f602aa5ba9d4989abfb1550d70a8d2870bd412fa34c25875d4fbacde725763e85adbdf10599a3038c5099d8a5b923820042acbfdd569148499a7eca6944f66' />
-    <input type="hidden" name="page" value="search" />
-    <fieldset class="main">
-        <input type="text" name="sPattern"  id="query" value="ie. PHP Programmer" />
-                    <select name="sCategory" id="sCategory"><option value="">Select a category</option><option value="1">For sale</option><option value="11">&nbsp;&nbsp;Bitcoins</option><option value="12">&nbsp;&nbsp;Books - Magazines</option><option value="13">&nbsp;&nbsp;Cameras - Camera Accessories</option><option value="14">&nbsp;&nbsp;CDs - Records</option><option value="15">&nbsp;&nbsp;Cell Phones - Accessories</option><option value="16">&nbsp;&nbsp;Clothing</option><option value="17">&nbsp;&nbsp;Computers - Hardware</option><option value="18">&nbsp;&nbsp;DVD</option><option value="19">&nbsp;&nbsp;Electronics</option><option value="20">&nbsp;&nbsp;For Babies - Infants</option><option value="21">&nbsp;&nbsp;Garage Sale</option><option value="22">&nbsp;&nbsp;Health - Beauty</option><option value="23">&nbsp;&nbsp;Home - Furniture - Garden Supplies</option><option value="24">&nbsp;&nbsp;Jewelry - Watches</option><option value="25">&nbsp;&nbsp;Musical Instruments</option><option value="26">&nbsp;&nbsp;Sporting Goods - Bicycles</option><option value="27">&nbsp;&nbsp;Tickets</option><option value="28">&nbsp;&nbsp;Toys - Games - Hobbies</option><option value="29">&nbsp;&nbsp;Video Games - Consoles</option><option value="30">&nbsp;&nbsp;Everything Else</option><option value="2">Vehicles</option><option value="31">&nbsp;&nbsp;Cars</option><option value="32">&nbsp;&nbsp;Car Parts</option><option value="33">&nbsp;&nbsp;Motorcycles</option><option value="34">&nbsp;&nbsp;Boats - Ships</option><option value="35">&nbsp;&nbsp;RVs - Campers - Caravans</option><option value="36">&nbsp;&nbsp;Trucks - Commercial Vehicles</option><option value="37">&nbsp;&nbsp;Other Vehicles</option><option value="3">Classes</option><option value="38">&nbsp;&nbsp;Computer - Multimedia Classes</option><option value="39">&nbsp;&nbsp;Language Classes</option><option value="40">&nbsp;&nbsp;Music - Theatre - Dance Classes</option><option value="41">&nbsp;&nbsp;Tutoring - Private Lessons</option><option value="42">&nbsp;&nbsp;Other Classes</option><option value="4">Real estate</option><option value="43">&nbsp;&nbsp;Houses - Apartments for Sale</option><option value="44">&nbsp;&nbsp;Houses - Apartments for Rent</option><option value="45">&nbsp;&nbsp;Rooms for Rent - Shared</option><option value="46">&nbsp;&nbsp;Housing Swap</option><option value="47">&nbsp;&nbsp;Vacation Rentals</option><option value="48">&nbsp;&nbsp;Parking Spots</option><option value="49">&nbsp;&nbsp;Land</option><option value="50">&nbsp;&nbsp;Office - Commercial Space</option><option value="51">&nbsp;&nbsp;Shops for Rent - Sale</option><option value="5">Services</option><option value="52">&nbsp;&nbsp;Babysitter - Nanny</option><option value="53">&nbsp;&nbsp;Casting - Auditions</option><option value="54">&nbsp;&nbsp;Computer</option><option value="55">&nbsp;&nbsp;Event Services</option><option value="56">&nbsp;&nbsp;Health - Beauty - Fitness</option><option value="57">&nbsp;&nbsp;Horoscopes - Tarot</option><option value="58">&nbsp;&nbsp;Household - Domestic Help</option><option value="59">&nbsp;&nbsp;Moving - Storage</option><option value="60">&nbsp;&nbsp;Repair</option><option value="61">&nbsp;&nbsp;Writing - Editing - Translating</option><option value="62">&nbsp;&nbsp;Other Services</option><option value="6">Community</option><option value="63">&nbsp;&nbsp;Carpool</option><option value="64">&nbsp;&nbsp;Community Activities</option><option value="65">&nbsp;&nbsp;Events</option><option value="66">&nbsp;&nbsp;Musicians - Artists - Bands</option><option value="67">&nbsp;&nbsp;Volunteers</option><option value="68">&nbsp;&nbsp;Lost And Found</option><option value="8">Jobs</option><option value="75">&nbsp;&nbsp;Accounting - Finance</option><option value="76">&nbsp;&nbsp;Advertising - Public Relations</option><option value="77">&nbsp;&nbsp;Arts - Entertainment - Publishing</option><option value="78">&nbsp;&nbsp;Clerical - Administrative</option><option value="79">&nbsp;&nbsp;Customer Service</option><option value="80">&nbsp;&nbsp;Education - Training</option><option value="81">&nbsp;&nbsp;Engineering - Architecture</option><option value="82">&nbsp;&nbsp;Healthcare</option><option value="83">&nbsp;&nbsp;Human Resource</option><option value="84">&nbsp;&nbsp;Internet</option><option value="85">&nbsp;&nbsp;Legal</option><option value="86">&nbsp;&nbsp;Manual Labor</option><option value="87">&nbsp;&nbsp;Manufacturing - Operations</option><option value="88">&nbsp;&nbsp;Marketing</option><option value="89">&nbsp;&nbsp;Non-profit - Volunteer</option><option value="90">&nbsp;&nbsp;Real Estate</option><option value="91">&nbsp;&nbsp;Restaurant - Food Service</option><option value="92">&nbsp;&nbsp;Retail</option><option value="93">&nbsp;&nbsp;Sales</option><option value="94">&nbsp;&nbsp;Technology</option><option value="95">&nbsp;&nbsp;Other Jobs</option></select>             <button type="submit">Search</button>
-    </fieldset>
-    <div id="search-example"></div>
-</form>        </div>
-        <div class="content home">
-            <div id="main">
-                <div class="categories c7">
-        <div class="col c1">            <div class="category">
-            <h1><strong><a class="category cat_1" href="http://demo.osclass.org/general/index.php?page=search&sCategory=1">For sale</a> <span>(3)</span></strong></h1>
-                        <ul>
-                                    <li><a class="category cat_12" href="http://demo.osclass.org/general/index.php?page=search&sCategory=12">Bitcoins</a> <span>(2)</span></li>
-                                    <li><a class="category cat_12" href="http://demo.osclass.org/general/index.php?page=search&sCategory=12">Books - Magazines</a> <span>(2)</span></li>
-                                    <li><a class="category cat_13" href="http://demo.osclass.org/general/index.php?page=search&sCategory=13">Cameras - Camera Accessories</a> <span>(0)</span></li>
-                                    <li><a class="category cat_14" href="http://demo.osclass.org/general/index.php?page=search&sCategory=14">CDs - Records</a> <span>(0)</span></li>
-                                    <li><a class="category cat_15" href="http://demo.osclass.org/general/index.php?page=search&sCategory=15">Cell Phones - Accessories</a> <span>(0)</span></li>
-                                    <li><a class="category cat_16" href="http://demo.osclass.org/general/index.php?page=search&sCategory=16">Clothing</a> <span>(0)</span></li>
-                                    <li><a class="category cat_17" href="http://demo.osclass.org/general/index.php?page=search&sCategory=17">Computers - Hardware</a> <span>(0)</span></li>
-                                    <li><a class="category cat_18" href="http://demo.osclass.org/general/index.php?page=search&sCategory=18">DVD</a> <span>(1)</span></li>
-                                    <li><a class="category cat_19" href="http://demo.osclass.org/general/index.php?page=search&sCategory=19">Electronics</a> <span>(0)</span></li>
-                                    <li><a class="category cat_20" href="http://demo.osclass.org/general/index.php?page=search&sCategory=20">For Babies - Infants</a> <span>(0)</span></li>
-                                    <li><a class="category cat_21" href="http://demo.osclass.org/general/index.php?page=search&sCategory=21">Garage Sale</a> <span>(0)</span></li>
-                                    <li><a class="category cat_22" href="http://demo.osclass.org/general/index.php?page=search&sCategory=22">Health - Beauty</a> <span>(0)</span></li>
-                                    <li><a class="category cat_23" href="http://demo.osclass.org/general/index.php?page=search&sCategory=23">Home - Furniture - Garden Supplies</a> <span>(0)</span></li>
-                                    <li><a class="category cat_24" href="http://demo.osclass.org/general/index.php?page=search&sCategory=24">Jewelry - Watches</a> <span>(0)</span></li>
-                                    <li><a class="category cat_25" href="http://demo.osclass.org/general/index.php?page=search&sCategory=25">Musical Instruments</a> <span>(0)</span></li>
-                                    <li><a class="category cat_26" href="http://demo.osclass.org/general/index.php?page=search&sCategory=26">Sporting Goods - Bicycles</a> <span>(0)</span></li>
-                                    <li><a class="category cat_27" href="http://demo.osclass.org/general/index.php?page=search&sCategory=27">Tickets</a> <span>(0)</span></li>
-                                    <li><a class="category cat_28" href="http://demo.osclass.org/general/index.php?page=search&sCategory=28">Toys - Games - Hobbies</a> <span>(0)</span></li>
-                                    <li><a class="category cat_29" href="http://demo.osclass.org/general/index.php?page=search&sCategory=29">Video Games - Consoles</a> <span>(0)</span></li>
-                                    <li><a class="category cat_30" href="http://demo.osclass.org/general/index.php?page=search&sCategory=30">Everything Else</a> <span>(0)</span></li>
-                            </ul>
-                </div>
-                    <div class="category">
-            <h1><strong><a class="category cat_2" href="http://demo.osclass.org/general/index.php?page=search&sCategory=2">Vehicles</a> <span>(2)</span></strong></h1>
-                        <ul>
-                                    <li><a class="category cat_31" href="http://demo.osclass.org/general/index.php?page=search&sCategory=31">Cars</a> <span>(2)</span></li>
-                                    <li><a class="category cat_32" href="http://demo.osclass.org/general/index.php?page=search&sCategory=32">Car Parts</a> <span>(0)</span></li>
-                                    <li><a class="category cat_33" href="http://demo.osclass.org/general/index.php?page=search&sCategory=33">Motorcycles</a> <span>(0)</span></li>
-                                    <li><a class="category cat_34" href="http://demo.osclass.org/general/index.php?page=search&sCategory=34">Boats - Ships</a> <span>(0)</span></li>
-                                    <li><a class="category cat_35" href="http://demo.osclass.org/general/index.php?page=search&sCategory=35">RVs - Campers - Caravans</a> <span>(0)</span></li>
-                                    <li><a class="category cat_36" href="http://demo.osclass.org/general/index.php?page=search&sCategory=36">Trucks - Commercial Vehicles</a> <span>(0)</span></li>
-                                    <li><a class="category cat_37" href="http://demo.osclass.org/general/index.php?page=search&sCategory=37">Other Vehicles</a> <span>(0)</span></li>
-                            </ul>
-                </div>
-                    <div class="category">
-            <h1><strong><a class="category cat_3" href="http://demo.osclass.org/general/index.php?page=search&sCategory=3">Classes</a> <span>(0)</span></strong></h1>
-                        <ul>
-                                    <li><a class="category cat_38" href="http://demo.osclass.org/general/index.php?page=search&sCategory=38">Computer - Multimedia Classes</a> <span>(0)</span></li>
-                                    <li><a class="category cat_39" href="http://demo.osclass.org/general/index.php?page=search&sCategory=39">Language Classes</a> <span>(0)</span></li>
-                                    <li><a class="category cat_40" href="http://demo.osclass.org/general/index.php?page=search&sCategory=40">Music - Theatre - Dance Classes</a> <span>(0)</span></li>
-                                    <li><a class="category cat_41" href="http://demo.osclass.org/general/index.php?page=search&sCategory=41">Tutoring - Private Lessons</a> <span>(0)</span></li>
-                                    <li><a class="category cat_42" href="http://demo.osclass.org/general/index.php?page=search&sCategory=42">Other Classes</a> <span>(0)</span></li>
-                            </ul>
-                </div>
-        </div><div class="col c2">            <div class="category">
-            <h1><strong><a class="category cat_4" href="http://demo.osclass.org/general/index.php?page=search&sCategory=4">Real estate</a> <span>(2)</span></strong></h1>
-                        <ul>
-                                    <li><a class="category cat_43" href="http://demo.osclass.org/general/index.php?page=search&sCategory=43">Houses - Apartments for Sale</a> <span>(0)</span></li>
-                                    <li><a class="category cat_44" href="http://demo.osclass.org/general/index.php?page=search&sCategory=44">Houses - Apartments for Rent</a> <span>(1)</span></li>
-                                    <li><a class="category cat_45" href="http://demo.osclass.org/general/index.php?page=search&sCategory=45">Rooms for Rent - Shared</a> <span>(1)</span></li>
-                                    <li><a class="category cat_46" href="http://demo.osclass.org/general/index.php?page=search&sCategory=46">Housing Swap</a> <span>(0)</span></li>
-                                    <li><a class="category cat_47" href="http://demo.osclass.org/general/index.php?page=search&sCategory=47">Vacation Rentals</a> <span>(0)</span></li>
-                                    <li><a class="category cat_48" href="http://demo.osclass.org/general/index.php?page=search&sCategory=48">Parking Spots</a> <span>(0)</span></li>
-                                    <li><a class="category cat_49" href="http://demo.osclass.org/general/index.php?page=search&sCategory=49">Land</a> <span>(0)</span></li>
-                                    <li><a class="category cat_50" href="http://demo.osclass.org/general/index.php?page=search&sCategory=50">Office - Commercial Space</a> <span>(0)</span></li>
-                                    <li><a class="category cat_51" href="http://demo.osclass.org/general/index.php?page=search&sCategory=51">Shops for Rent - Sale</a> <span>(0)</span></li>
-                            </ul>
-                </div>
-                    <div class="category">
-            <h1><strong><a class="category cat_5" href="http://demo.osclass.org/general/index.php?page=search&sCategory=5">Services</a> <span>(0)</span></strong></h1>
-                        <ul>
-                                    <li><a class="category cat_52" href="http://demo.osclass.org/general/index.php?page=search&sCategory=52">Babysitter - Nanny</a> <span>(0)</span></li>
-                                    <li><a class="category cat_53" href="http://demo.osclass.org/general/index.php?page=search&sCategory=53">Casting - Auditions</a> <span>(0)</span></li>
-                                    <li><a class="category cat_54" href="http://demo.osclass.org/general/index.php?page=search&sCategory=54">Computer</a> <span>(0)</span></li>
-                                    <li><a class="category cat_55" href="http://demo.osclass.org/general/index.php?page=search&sCategory=55">Event Services</a> <span>(0)</span></li>
-                                    <li><a class="category cat_56" href="http://demo.osclass.org/general/index.php?page=search&sCategory=56">Health - Beauty - Fitness</a> <span>(0)</span></li>
-                                    <li><a class="category cat_57" href="http://demo.osclass.org/general/index.php?page=search&sCategory=57">Horoscopes - Tarot</a> <span>(0)</span></li>
-                                    <li><a class="category cat_58" href="http://demo.osclass.org/general/index.php?page=search&sCategory=58">Household - Domestic Help</a> <span>(0)</span></li>
-                                    <li><a class="category cat_59" href="http://demo.osclass.org/general/index.php?page=search&sCategory=59">Moving - Storage</a> <span>(0)</span></li>
-                                    <li><a class="category cat_60" href="http://demo.osclass.org/general/index.php?page=search&sCategory=60">Repair</a> <span>(0)</span></li>
-                                    <li><a class="category cat_61" href="http://demo.osclass.org/general/index.php?page=search&sCategory=61">Writing - Editing - Translating</a> <span>(0)</span></li>
-                                    <li><a class="category cat_62" href="http://demo.osclass.org/general/index.php?page=search&sCategory=62">Other Services</a> <span>(0)</span></li>
-                            </ul>
-                </div>
-        </div><div class="col c3">            <div class="category">
-            <h1><strong><a class="category cat_6" href="http://demo.osclass.org/general/index.php?page=search&sCategory=6">Community</a> <span>(0)</span></strong></h1>
-                        <ul>
-                                    <li><a class="category cat_63" href="http://demo.osclass.org/general/index.php?page=search&sCategory=63">Carpool</a> <span>(0)</span></li>
-                                    <li><a class="category cat_64" href="http://demo.osclass.org/general/index.php?page=search&sCategory=64">Community Activities</a> <span>(0)</span></li>
-                                    <li><a class="category cat_65" href="http://demo.osclass.org/general/index.php?page=search&sCategory=65">Events</a> <span>(0)</span></li>
-                                    <li><a class="category cat_66" href="http://demo.osclass.org/general/index.php?page=search&sCategory=66">Musicians - Artists - Bands</a> <span>(0)</span></li>
-                                    <li><a class="category cat_67" href="http://demo.osclass.org/general/index.php?page=search&sCategory=67">Volunteers</a> <span>(0)</span></li>
-                                    <li><a class="category cat_68" href="http://demo.osclass.org/general/index.php?page=search&sCategory=68">Lost And Found</a> <span>(0)</span></li>
-                            </ul>
-                </div>
-                    <div class="category">
-            <h1><strong><a class="category cat_8" href="http://demo.osclass.org/general/index.php?page=search&sCategory=8">Jobs</a> <span>(1)</span></strong></h1>
-                        <ul>
-                                    <li><a class="category cat_75" href="http://demo.osclass.org/general/index.php?page=search&sCategory=75">Accounting - Finance</a> <span>(1)</span></li>
-                                    <li><a class="category cat_76" href="http://demo.osclass.org/general/index.php?page=search&sCategory=76">Advertising - Public Relations</a> <span>(0)</span></li>
-                                    <li><a class="category cat_77" href="http://demo.osclass.org/general/index.php?page=search&sCategory=77">Arts - Entertainment - Publishing</a> <span>(0)</span></li>
-                                    <li><a class="category cat_78" href="http://demo.osclass.org/general/index.php?page=search&sCategory=78">Clerical - Administrative</a> <span>(0)</span></li>
-                                    <li><a class="category cat_79" href="http://demo.osclass.org/general/index.php?page=search&sCategory=79">Customer Service</a> <span>(0)</span></li>
-                                    <li><a class="category cat_80" href="http://demo.osclass.org/general/index.php?page=search&sCategory=80">Education - Training</a> <span>(0)</span></li>
-                                    <li><a class="category cat_81" href="http://demo.osclass.org/general/index.php?page=search&sCategory=81">Engineering - Architecture</a> <span>(0)</span></li>
-                                    <li><a class="category cat_82" href="http://demo.osclass.org/general/index.php?page=search&sCategory=82">Healthcare</a> <span>(0)</span></li>
-                                    <li><a class="category cat_83" href="http://demo.osclass.org/general/index.php?page=search&sCategory=83">Human Resource</a> <span>(0)</span></li>
-                                    <li><a class="category cat_84" href="http://demo.osclass.org/general/index.php?page=search&sCategory=84">Internet</a> <span>(0)</span></li>
-                                    <li><a class="category cat_85" href="http://demo.osclass.org/general/index.php?page=search&sCategory=85">Legal</a> <span>(0)</span></li>
-                                    <li><a class="category cat_86" href="http://demo.osclass.org/general/index.php?page=search&sCategory=86">Manual Labor</a> <span>(0)</span></li>
-                                    <li><a class="category cat_87" href="http://demo.osclass.org/general/index.php?page=search&sCategory=87">Manufacturing - Operations</a> <span>(0)</span></li>
-                                    <li><a class="category cat_88" href="http://demo.osclass.org/general/index.php?page=search&sCategory=88">Marketing</a> <span>(0)</span></li>
-                                    <li><a class="category cat_89" href="http://demo.osclass.org/general/index.php?page=search&sCategory=89">Non-profit - Volunteer</a> <span>(0)</span></li>
-                                    <li><a class="category cat_90" href="http://demo.osclass.org/general/index.php?page=search&sCategory=90">Real Estate</a> <span>(0)</span></li>
-                                    <li><a class="category cat_91" href="http://demo.osclass.org/general/index.php?page=search&sCategory=91">Restaurant - Food Service</a> <span>(0)</span></li>
-                                    <li><a class="category cat_92" href="http://demo.osclass.org/general/index.php?page=search&sCategory=92">Retail</a> <span>(0)</span></li>
-                                    <li><a class="category cat_93" href="http://demo.osclass.org/general/index.php?page=search&sCategory=93">Sales</a> <span>(0)</span></li>
-                                    <li><a class="category cat_94" href="http://demo.osclass.org/general/index.php?page=search&sCategory=94">Technology</a> <span>(0)</span></li>
-                                    <li><a class="category cat_95" href="http://demo.osclass.org/general/index.php?page=search&sCategory=95">Other Jobs</a> <span>(0)</span></li>
-                            </ul>
-                </div>
-        </div>    </div>               <div class="latest_ads">
-                    <h1><strong>Latest Listings</strong></h1>
-                                            <table border="0" cellspacing="0">
-                             <tbody>
-                                                                                                 <tr class="even">
-                                                                                 <td class="photo">
-                                                                                            <a href="http://demo.osclass.org/general/index.php?page=item&id=36">
-                                                    <img src="http://demo.osclass.org/general/oc-content/uploads/115_thumbnail.jpg" width="75" height="56" title="5 bedroom house located in Branksome Park for rent" alt="5 bedroom house located in Branksome Park for rent" />
-                                                </a>
-                                                                                     </td>
-                                                                                 <td class="text">
-                                             <h3><a href="http://demo.osclass.org/general/index.php?page=item&id=36">5 bedroom house located in Branksome Park for rent</a></h3>
-                                             <p><strong>25000.00 Dollar US$ - A Pastoriza (Lugo) - April 24, 2013</strong></p>
-                                             <p>5 bedroom house located in Branksome Park for rent   Churchfield Sales and Lettings are delighted to offer to rent this recently refurbished five bedroom detached Edwardian house located in the sought after area of Branksome Park in Poole and is situated in a quiet residential road with outlook over...</p>
-                                         </td>
-                                     </tr>
-                                                                                                     <tr class="odd">
-                                                                                 <td class="photo">
-                                                                                            <a href="http://demo.osclass.org/general/index.php?page=item&id=35">
-                                                    <img src="http://demo.osclass.org/general/oc-content/uploads/112_thumbnail.jpg" width="75" height="56" title="Double Room In Winton - All Bills Included" alt="Double Room In Winton - All Bills Included" />
-                                                </a>
-                                                                                     </td>
-                                                                                 <td class="text">
-                                             <h3><a href="http://demo.osclass.org/general/index.php?page=item&id=35">Double Room In Winton - All Bills Included</a></h3>
-                                             <p><strong>190.00 Dollar US$ - As Nogais (Lugo) - April 24, 2013</strong></p>
-                                             <p>Spacious double room in Winton available within 5 minutes walk of the University. The house is situated close to Winton High Street, so there is easy access to all the shops and eateries at the High Street and also Bus Stops to the Town Centre and elsewhere.   You will be sharing the house with othe...</p>
-                                         </td>
-                                     </tr>
-                                                                                                     <tr class="even">
-                                                                                 <td class="photo">
-                                                                                            <a href="http://demo.osclass.org/general/index.php?page=item&id=34">
-                                                    <img src="http://demo.osclass.org/general/oc-content/uploads/110_thumbnail.jpg" width="75" height="56" title="2009 Kia Soul 1.6 CRDi Special Edition Samba" alt="2009 Kia Soul 1.6 CRDi Special Edition Samba" />
-                                                </a>
-                                                                                     </td>
-                                                                                 <td class="text">
-                                             <h3><a href="http://demo.osclass.org/general/index.php?page=item&id=34">2009 Kia Soul 1.6 CRDi Special Edition Samba</a></h3>
-                                             <p><strong>9600.00 Dollar US$ - Sabadell (Barcelona) - April 24, 2013</strong></p>
-                                             <p>Kia Soul 1.6 CRDi Samba   54,000 Miles with full service history, 11 months MOT, 11 months Road Tax, manufacturers warranty valid until April 2014.   Good condition car that as served us very well, never having had any noteworthy problems in the 3 years we've been running it, only selling because my...</p>
-                                         </td>
-                                     </tr>
-                                                                                                     <tr class="odd">
-                                                                                 <td class="photo">
-                                                                                            <a href="http://demo.osclass.org/general/index.php?page=item&id=33">
-                                                    <img src="http://demo.osclass.org/general/oc-content/uploads/106_thumbnail.jpg" width="75" height="56" title="2002 MAZDA MPV DIESEL GREEN 7 seats and sliding doors *BARGAIN*" alt="2002 MAZDA MPV DIESEL GREEN 7 seats and sliding doors *BARGAIN*" />
-                                                </a>
-                                                                                     </td>
-                                                                                 <td class="text">
-                                             <h3><a href="http://demo.osclass.org/general/index.php?page=item&id=33">2002 MAZDA MPV DIESEL GREEN 7 seats and sliding doors *BARGAIN*</a></h3>
-                                             <p><strong>22000.00 Dollar US$ - Terriente (Teruel) - April 24, 2013</strong></p>
-                                             <p>ABS, Air Conditioning, Alarm, Alloy Wheels, Audio Remote Control, Body Coloured Bumpers, Drivers Airbag, Electric Door Mirrors, Electric Sunroof, Folding Rear Seats, Front Electric Windows, Front Fog Lights, Heated Door Mirrors, Height Adjustable Drivers Seat, Immobiliser, Passenger Airbag, Power St...</p>
-                                         </td>
-                                     </tr>
-                                                                                                     <tr class="even">
-                                                                                 <td class="photo">
-                                                                                            <a href="http://demo.osclass.org/general/index.php?page=item&id=32">
-                                                    <img src="http://demo.osclass.org/general/oc-content/uploads/105_thumbnail.jpg" width="75" height="56" title="4 TRAIN DVDS &amp; 1 BOOK" alt="4 TRAIN DVDS &amp; 1 BOOK" />
-                                                </a>
-                                                                                     </td>
-                                                                                 <td class="text">
-                                             <h3><a href="http://demo.osclass.org/general/index.php?page=item&id=32">4 TRAIN DVDS &amp; 1 BOOK</a></h3>
-                                             <p><strong>10.00 Dollar US$ - Corcubion (A Coruña) - April 24, 2013</strong></p>
-                                             <p>4 DVDS   THE VERY BEST OF BRITISH STEAM TODAY  THE HISTORY OF STEAM RAILWAY  STEAM ENGINES OF L.N.E.R  THE VERY BEST OF STEAM OF YESTERYEAR   1 BOOK  THE STEAMING SIXTIES ( NUMBER 2 STEAM IN THE SUBURBS )</p>
-                                         </td>
-                                     </tr>
-                                                                                                     <tr class="odd">
-                                                                                 <td class="photo">
-                                                                                            <a href="http://demo.osclass.org/general/index.php?page=item&id=30">
-                                                    <img src="http://demo.osclass.org/general/oc-content/uploads/101_thumbnail.jpg" width="75" height="56" title="Disney Cinderella Book and Read-along CD" alt="Disney Cinderella Book and Read-along CD" />
-                                                </a>
-                                                                                     </td>
-                                                                                 <td class="text">
-                                             <h3><a href="http://demo.osclass.org/general/index.php?page=item&id=30">Disney Cinderella Book and Read-along CD</a></h3>
-                                             <p><strong>2.00 Dollar US$ - Barcelona (Barcelona) - April 24, 2013</strong></p>
-                                             <p>Excellent condition.  Received two as a present - this one is unopened so as new.</p>
-                                         </td>
-                                     </tr>
-                                                                                                     <tr class="even">
-                                                                                 <td class="photo">
-                                                                                            <a href="http://demo.osclass.org/general/index.php?page=item&id=29">
-                                                    <img src="http://demo.osclass.org/general/oc-content/uploads/100_thumbnail.jpg" width="75" height="56" title="Matrix DVD set" alt="Matrix DVD set" />
-                                                </a>
-                                                                                     </td>
-                                                                                 <td class="text">
-                                             <h3><a href="http://demo.osclass.org/general/index.php?page=item&id=29">Matrix DVD set</a></h3>
-                                             <p><strong>2.00 Dollar US$ - Mula (Murcia) - April 24, 2013</strong></p>
-                                             <p>Matrix DVD's £2.00 each or will accept £5.00 for all. Good condition.</p>
-                                         </td>
-                                     </tr>
-                                                                                                     <tr class="odd">
-                                                                                 <td class="photo">
-                                                                                            <img src="http://demo.osclass.org/general/oc-content/themes/modern/images/no_photo.gif" alt="" title="" />
-                                                                                     </td>
-                                                                                 <td class="text">
-                                             <h3><a href="http://demo.osclass.org/general/index.php?page=item&id=1">Bookkeeper / Accounts Assistant / Payroll Clerk</a></h3>
-                                             <p><strong>Check with seller - Sabadell (Barcelona) - April 1, 2012</strong></p>
-                                             <p>CLOSING DATE FOR APPLICATIONS: 5 APRIL 2012 – NO AGENCIES   Salary: £25,000 - £30,000  Fulltime, but 4 day week would be considered if suits the right candidate.   We are a ship management company based in central London offices in the heart of Covent Garden. We are looking for a book-keeper who is ...</p>
-                                         </td>
-                                     </tr>
-                                                                                                </tbody>
-                        </table>
-                                                            </div>
-            </div>
-            <div id="sidebar">
-                <div class="navigation">
-                                        <div class="box location">
-                        <h3><strong>Location</strong></h3>
-                        <ul>
-                                                    <li><a href="http://demo.osclass.org/general/index.php?page=search&sRegion=52">A Coruña</a> <em>(1)</em></li>
-                                                    <li><a href="http://demo.osclass.org/general/index.php?page=search&sRegion=3">Barcelona</a> <em>(3)</em></li>
-                                                    <li><a href="http://demo.osclass.org/general/index.php?page=search&sRegion=80">Lugo</a> <em>(2)</em></li>
-                                                    <li><a href="http://demo.osclass.org/general/index.php?page=search&sRegion=83">Murcia</a> <em>(1)</em></li>
-                                                    <li><a href="http://demo.osclass.org/general/index.php?page=search&sRegion=93">Teruel</a> <em>(1)</em></li>
-                                                </ul>
-                    </div>
-                                    </div>
-            </div>
-        </div>
-    </body>
+    <script src="/js/myScript.js"></script>
+
+    <button type="button" onclick="myFunction()">Click Me!</button>
+    <button type="button" onclick="scrubInput()">Validate number</button>
+
+    <img id="myimage" onclick="changeImage()"
+    src="/img/pic_bulboff.gif" width="100" height="180">
+
+    <p>Click the light bulb to turn on/off the light</p>
+
+    <!--End of javascript experimentation-->
+
+  </body>
 </html>
+{% endautoescape %}
